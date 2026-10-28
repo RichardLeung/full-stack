@@ -1,0 +1,34 @@
+{
+  "name": "english-learning-workspace",
+  "private": true,
+  "license": "MIT",
+  "packageManager": "pnpm@9.14.4",
+  "scripts": {
+    "protocol:generate": "node scripts/generate-protocol.mjs",
+    "prepare:workspace": "node scripts/generate-locales.mjs && pnpm protocol:generate && pnpm --filter @learning/protocol build && pnpm --filter @learning/client build",
+    "db:start": "node scripts/database.mjs start",
+    "db:stop": "node scripts/database.mjs stop",
+    "db:migrate": "pnpm --filter @learning/api prisma migrate deploy",
+    "dev": "pnpm prepare:workspace && concurrently -k -n api,web \"pnpm --filter @learning/api dev\" \"pnpm --filter @learning/web dev\"",
+    "dev:desktop": "pnpm --filter @learning/desktop dev",
+    "build": "pnpm prepare:workspace && pnpm --filter @learning/api build && pnpm --filter @learning/web build && pnpm --filter @learning/desktop build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm --filter @learning/api test",
+    "test:integration": "node scripts/integration.mjs",
+    "protocol:dart": "sh scripts/generate-dart.sh",
+    "mobile:analyze": ".tools/flutter/bin/flutter analyze apps/mobile",
+    "dev:api": "pnpm --filter @learning/api dev"
+  },
+  "devDependencies": {
+    "@bufbuild/buf": "^1.75.0",
+    "@types/node": "^22.0.0",
+    "concurrently": "^9.2.0",
+    "embedded-postgres": "17.10.0-beta.17",
+    "node": "22.23.4",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

@@ -1,0 +1,6 @@
+version: v2
+plugins:
+  - local: scripts/protoc-gen-dart
+    out: apps/mobile/lib/generated
+inputs:
+  - proto_file: packages/protocol/learning.proto

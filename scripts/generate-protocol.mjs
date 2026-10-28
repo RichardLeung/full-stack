@@ -1,0 +1,10 @@
+import { execFileSync } from 'node:child_process';
+import { resolve } from 'node:path';
+import { readFileSync, writeFileSync } from 'node:fs';
+const cwd=resolve('packages/protocol');
+const run=(args)=>execFileSync('pnpm',args,{cwd,stdio:'inherit'});
+run(['exec','pbjs','-t','static-module','-w','es6','--no-delimited','-o','src/generated/messages.js','learning.proto']);
+const generated=resolve(cwd,'src/generated/messages.js');
+writeFileSync(generated,readFileSync(generated,'utf8').replace('import * as $protobuf from \"protobufjs/minimal\";', 'import $protobuf from \"protobufjs/minimal.js\";'));
+run(['exec','pbts','-o','src/generated/messages.d.ts','src/generated/messages.js']);
+console.log('TypeScript protocol generated. Dart: see scripts/generate-dart.sh.');

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>个人英语学习记录 · 微信风格双端设计</title>
+<link rel="stylesheet" href="styles.css">
+<script src="i18n.js"></script>
+<script>
+(() => {
+  let preference = 'system';
+  try { const saved = localStorage.getItem('learning-appearance'); if (['system','light','dark'].includes(saved)) preference = saved; } catch {}
+  document.documentElement.dataset.appearance = preference;
+  document.documentElement.dataset.theme = preference === 'system' ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : preference;
+})();
+</script>
+</head>
+<body>
+<header class="review-header"><div><div class="eyebrow">PRODUCT STUDY / 003</div><h1 data-i18n="把每天的英语练习，留在会话里。">把每天的英语练习，留在会话里。</h1><p data-i18n="个人学习记录 · 微信风格 · 中英双语 · v0.3">个人学习记录 · 微信风格 · 中英双语 · v0.3</p></div><div class="review-controls"><nav class="switch" aria-label="设计稿视图" data-i18n-aria="设计稿视图"><button class="active" data-mode="both" aria-pressed="true" data-i18n="双端总览">双端总览</button><button data-mode="mobile" aria-pressed="false" data-i18n="手机">手机</button><button data-mode="desktop" aria-pressed="false" data-i18n="桌面">桌面</button></nav><div class="appearance-preview" aria-label="外观预览" data-i18n-aria="外观预览"><span data-i18n="外观预览">外观预览</span><button data-theme-preview="system" aria-pressed="false" data-i18n="跟随系统">跟随系统</button><button data-theme-preview="light" aria-pressed="false" data-i18n="浅色">浅色</button><button data-theme-preview="dark" aria-pressed="false" data-i18n="深色">深色</button></div></div></header>
+<main class="workspace" id="workspace"><section class="mobile-wrap"><div class="frame-label"><span class="frame-title" data-i18n="01 / 手机 App">01 / 手机 App</span> <span data-i18n="会话 / 设置">会话 / 设置</span></div><div class="phone"><div class="status"><span>9:41</span><span class="island"></span><span class="status-right">▮▮▮ ◒ ▰</span></div><div class="phone-app" id="mobile-app"></div><div class="home-indicator"></div></div></section><section class="desktop-wrap"><div class="frame-label"><span class="frame-title" data-i18n="02 / 桌面 App">02 / 桌面 App</span> <span data-i18n="左下角设置入口">左下角设置入口</span></div><div class="desktop"><div class="windowbar"><i></i><i></i><i></i><span data-i18n="英语学习记录">英语学习记录</span></div><div class="desktop-body" id="desktop-app"></div></div></section></main>
+<footer class="review-footer"><div><strong data-i18n="微信风格 · 两种外观，中英双语">微信风格 · 两种外观，中英双语</strong><div class="steps" style="margin-top:10px"><span data-i18n="新建会话">新建会话</span><span data-i18n="文字 / 语音 / 图片">文字 / 语音 / 图片</span><span data-i18n="回看记录">回看记录</span><span data-i18n="外观与语言">外观与语言</span></div><p data-i18n="手机：底部「会话 / 设置」，聊天详情隐藏 Tab。桌面：左下角齿轮打开设置。">手机：底部「会话 / 设置」，聊天详情隐藏 Tab。桌面：左下角齿轮打开设置。</p></div><div class="notes"><strong data-i18n="交互原型说明">交互原型说明</strong><p data-i18n="语音与播放为模拟，图片仅本地预览；记录刷新后重置，外观和语言选择保留在当前浏览器。">语音与播放为模拟，图片仅本地预览；记录刷新后重置，外观和语言选择保留在当前浏览器。</p><button class="secondary" style="margin-top:10px;padding:6px 10px;font-size:10px" id="reset-demo" data-i18n="重置演示">重置演示</button></div></footer>
+<div id="modal-host"></div><div class="toast" id="toast" role="status" hidden></div><input type="file" id="image-picker" accept="image/*" hidden>
+<script src="app.js"></script>
+</body>
+</html>

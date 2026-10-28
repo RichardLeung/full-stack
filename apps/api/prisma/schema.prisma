@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+model Conversation {
+  id String @id @default(uuid())
+  ownerId String @default("local-user")
+  title String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  messages Message[]
+  @@index([ownerId, updatedAt])
+}
+model Message {
+  id String @id @default(uuid())
+  ownerId String @default("local-user")
+  conversationId String
+  clientMessageId String
+  kind Int
+  text String @default("")
+  mediaId String?
+  createdAt DateTime @default(now())
+  conversation Conversation @relation(fields:[conversationId], references:[id], onDelete:Cascade)
+  media Media? @relation(fields:[mediaId], references:[id])
+  @@unique([ownerId, clientMessageId])
+  @@index([conversationId, createdAt, id])
+}
+model Media {
+  id String @id @default(uuid())
+  ownerId String @default("local-user")
+  storageKey String @unique
+  mimeType String
+  originalName String
+  size Int
+  durationMs Int @default(0)
+  createdAt DateTime @default(now())
+  messages Message[]
+}
